@@ -1,0 +1,451 @@
+<html>
+<head>
+<style>
+body {
+ background-color:violet;
+}
+</style>
+<title> Sorting Ceremony </title>
+<script language="javascript">
+// Logic
+// DONE if any option has value greater than or equal to 3 then that option is their house  
+// DONE if option A =2 and any other option has 2, show double house
+// if option A =2 and all option has 1 point, show option A house
+// if all options=1 show new html
+// DONE if muggle=2 and any other house=2, show squib
+ 
+function sortingCeremony()
+{
+	var answeredAllQuestions = fnValidate();
+	if (answeredAllQuestions == true)
+	{
+		vAnswers = fngetAllAnswers();
+		fnCalculatePoints(vAnswers);
+	}
+
+}
+
+function fnValidate()
+{
+	var vQ1Answered = fnCheckQuestion('one');
+	if ( !vQ1Answered ) {
+		alert ("Please answer Question 1");
+		return false;
+	}
+	var vQ2Answered = fnCheckQuestion('two');
+	if ( !vQ2Answered ) {
+		alert ("Please answer Question 2");
+		return false;
+	}
+	var vQ3Answered = fnCheckQuestion('three');
+	if ( !vQ3Answered ) {
+		alert ("Please answer Question 3");
+		return false;
+	}
+	var vQ4Answered = fnCheckQuestion('four');
+	if ( !vQ4Answered ) {
+		alert ("Please answer Question 4");
+		return false;
+	}
+	var vQ5Answered = fnCheckQuestion('five');
+	if ( !vQ5Answered ) {
+		alert ("Please answer Question 5");
+		return false;
+	}	
+		
+	return true;
+}
+
+function fnCheckQuestion(qName)
+{
+	var quest = document.getElementsByName(qName); 
+	for(i = 0; i < quest.length; i++) { 
+		if(quest[i].checked) return true;
+	}	
+	return false;
+     
+}	
+function fngetAllAnswers()
+{
+	var vAllAnswers = [];
+	vAllAnswers[0] = fngetAnswerFromQuestion('one');  
+	vAllAnswers[1] = fngetAnswerFromQuestion('two');
+	vAllAnswers[2] = fngetAnswerFromQuestion('three');
+	vAllAnswers[3] = fngetAnswerFromQuestion('four');
+	vAllAnswers[4] = fngetAnswerFromQuestion('five');
+
+	return vAllAnswers;
+}
+function fngetAnswerFromQuestion(qName)
+{
+	var vAnswer = document.getElementsByName(qName); 
+		for(i = 0; i < vAnswer.length; i++) { 
+			if(vAnswer[i].checked) 
+			{
+				return i+1;
+			}
+		} 
+		return "";
+}
+function fnCalculatePoints(vAllAnswers)
+{
+	var vGryffindorPoint=0;
+	var vHufflepuffPoint=0;
+	var vRavenclawPoint=0;
+	var vSlytherinPoint=0;
+	var vMugglePoint=0;
+	for (i=0; i<vAllAnswers.length; i++)
+	{
+		if (vAllAnswers[i]==1)
+		{
+			vGryffindorPoint++;
+		}
+		else if (vAllAnswers[i]==2)
+		{
+			vHufflepuffPoint++;
+		}
+		else if (vAllAnswers[i]==3)
+		{
+			vRavenclawPoint++;
+		}
+		else if (vAllAnswers[i]==4)
+		{
+			vSlytherinPoint++;
+		}
+		else
+		{
+			vMugglePoint++;
+		}
+	}
+	
+	if (vGryffindorPoint >= 3)
+	{
+		window.location.replace("Gryffindor.html");
+		return;
+	}
+	else if (vHufflepuffPoint >= 3)
+	{
+		window.location.replace("Hufflepuff.html");
+		return;
+	}
+	if (vRavenclawPoint >= 3)
+	{
+		window.location.replace("Ravenclaw.html");
+		return;
+	}
+	if (vSlytherinPoint >= 3)
+	{
+		window.location.replace("Slytherin.html");
+		return;
+	}
+	if (vMugglePoint >= 3)
+	{
+		window.location.replace("Muggle.html");
+		return;
+	}
+
+	if (vGryffindorPoint == 2 && vHufflepuffPoint == 2)
+	{
+		window.location.replace("Gryffinpuff.html");
+		return;
+	}
+	if (vGryffindorPoint == 2 && vRavenclawPoint == 2)
+	{
+		window.location.replace("Gryffinclaw.html");
+		return;
+	}
+	if (vGryffindorPoint == 2 && vSlytherinPoint == 2)
+	{
+		window.location.replace("Slytherdor.html");
+		return;
+	}
+	if (vRavenclawPoint == 2 && vHufflepuffPoint == 2)
+	{
+		window.location.replace("Ravenpuff.html");
+		return;
+	}
+	if (vSlytherinPoint == 2 && vRavenclawPoint == 2)
+	{
+		window.location.replace("Slytherclaw.html");
+		return;
+	}
+	if (vSlytherinPoint == 2 && vHufflepuffPoint == 2)
+	{
+		window.location.replace("Slytherpuff.html");
+		return;
+	}
+	if ((vGryffindorPoint == 2 && vMugglePoint == 2) || 
+		(vHufflepuffPoint == 2 && vMugglePoint == 2) || 
+		(vRavenclawPoint == 2 && vMugglePoint == 2) ||
+		(vSlytherinPoint == 2 && vMugglePoint == 2) )
+		
+	{
+		window.location.replace("Squib.html");
+		return;
+	}
+	
+	var vCountOnes = 0;
+	if (vGryffindorPoint == 1) vCountOnes++;
+	if (vHufflepuffPoint == 1) vCountOnes++;
+	if (vRavenclawPoint == 1) vCountOnes++;
+	if (vSlytherinPoint == 1) vCountOnes++;
+	if (vMugglePoint == 1) vCountOnes++;
+	if (vCountOnes == 5)
+		{	
+			window.location.replace("MagicorMuggle.html");
+			return;
+		}
+	if (vCountOnes == 3)
+	{
+		if (vGryffindorPoint == 2)
+		{	
+			window.location.replace("Gryffindor.html");
+			return;
+		}	
+		if (vHufflepuffPoint == 2)
+		{	
+			window.location.replace("Hufflepuff.html");
+			return;
+		}
+		if (vRavenclawPoint == 2)
+		{	
+			window.location.replace("Ravenclaw.html");
+			return;
+		}
+		if (vSlytherinPoint == 2)
+		{	
+			window.location.replace("Slytherin.html");
+			return;
+		}
+		if (vMugglePoint == 2)
+		{	
+			window.location.replace("Muggle.html");
+			return;
+		}
+	
+	}	
+}
+</script>
+<style>
+table, td {
+	font-size: 30px;
+	text-align: center;
+}
+</style>
+
+</head>
+<body>
+	<font face = "AR Cena" color = "black" size = 6>
+	<text align ="center"> <h1>Sorting Ceremony</h1></text>
+	<hr/>
+	<h4> Find your Hogwarts house (The houses are Gryffindor, Hufflepufff, Ravenclaw and Slytherin) by taking our quiz: (Answer questions with your favourite options!)</h4>
+	</br>
+
+Q1. Choose your favourite colour combination.
+	<table>
+		<tr>
+			<td>
+				<input type="radio" name="one" value="Scarlet & Golden" id='q1_1'/>
+					<label for="q1_1">
+						<img src = "scarlet&golden.png" height="300" width="300"/>
+						</br>Scarlet and Golden 	
+					</label>
+				
+				
+			</td>	
+			<td>
+				<input type="radio" name="one" value="Yellow & Black"  id='q1_2'/>
+				<label for="q1_2">
+					<img src = "yellow&black.png" height="300" width="300"/>
+					</br>Yellow and Black
+				</label>
+			</td>
+			<td>
+				<input type="radio" name="one" value="Blue & Bronze" id='q1_3'/>
+					<label for="q1_3">
+						<img src = "blue&bronze.png" height="300" width="300"/>	  
+						</br>Blue and Bronze
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="one" value="Emerald & Silver" id='q1_4'/>
+					<label for="q1_4">
+						<img src = "emerald&silver.png" height="300" width="300"/>
+						</br>Emerald and Silver
+					</label>
+			</td>
+			<td>
+				<input type="radio"  name="one" value="Orange & Navy" id='q1_5'/>
+					<label for="q1_5">
+						<img src = "orange&navy.png" height="300" width="300">
+						</br>Orange and Navy
+					</label>
+			</td>
+		</tr>
+	</table>
+</br>
+Q2. There is a box containg 5 objects, out of which you can take only one. Which would be your choice?
+	<table>
+		<tr>
+			<td>
+				<input type="radio" name="two" value="Sword" id='q2_1'/>
+					<label for="q2_1">					
+						<img src = "Sword.png" height="350" width="200">
+						</br>Sword
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="two" value="Cup" id='q2_2'/>
+					<label for="q2_2">					
+						<img src = "Cup.png" height="350" width="300">
+						</br>Cup
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="two" value="Diadem" id='q2_3'/>
+					<label for="q2_3">					
+						<img src = "Diadem.png" height="350" width="400"/>
+						</br>Diadem
+					</label>
+			</td>
+			<td>
+				<input type="radio"  name="two" value="Locket" id='q2_4'/>
+					<label for="q2_4">					
+						<img src = "Locket.png" height="350" width="275"/>
+						</br>Locket
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="two" value="The most advanced gadget" id='q2_5'/>
+					<label for="q2_5">					
+						<img src = "Gadget.png" height="350" width="350"/>
+						</br>The most advanced gadget
+					</label>
+			</td>
+		</tr>
+	</table>
+</br>
+Q3. What is your favourite animal?
+	<table>
+		<tr>
+			<td>
+				<input type="radio" name="three" value="Lion" id='q3_1'/>
+					<label for="q3_1">					
+						<img src = "Lion.png" height="300" width="275"/>
+						</br>Lion
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="three" value="Badger" id='q3_2'/>
+					<label for="q3_2">
+						<img src = "Badger.png" height="300" width="350"/>					
+						</br>Badger
+					</label>
+  			</td>
+			<td>
+				<input type="radio" name="three" value="Eagle" id='q3_3'/>
+					<label for="q3_3">
+						<img src = "Eagle.png" height="300" width="350"/>
+						</br>Eagle
+					</label>
+  			</td>
+			<td>
+				<input type="radio" name="three" value="Serpent" id='q3_4'/>
+					<label for="q3_4">
+						<img src = "Serpent.png" height="300" width="300"/>					
+						</br>Serpent
+					</label>
+ 			</td>
+			<td>
+				<input type="radio" name="three" value="Dog" id='q3_5'/>
+					<label for="q3_5">
+						<img src = "Dog.png" height="300" width="300"/>
+						</br>Dog
+					</label>
+			</td>
+		</tr>
+	</table>
+</br>
+Q4. What type of friends do you want?
+	<table>
+		<tr>
+			<td>
+				<input type="radio" name="four" value="Brave & Bold" id='q4_1'/>
+					<label for="q4_1">
+					Brave & Bold
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="four" value="Kind & Caring" id='q4_2'/>
+					<label for="q4_2">
+					Kind & Caring
+					</label>			
+			</td>
+			<td>
+				<input type="radio" name="four" value="Wise & Smart" id='q4_3'/>
+					<label for="q4_3">
+					Wise & Smart
+					</label>			
+			</td>
+			<td>
+				<input type="radio" name="four" value="Cunning & Ambitious" id='q4_4'>
+					<label for="q4_4">
+					Cunning & Ambitious
+					</label>			
+			</td>
+			<td>
+				<input type="radio" name="four" value="Someone just like me!" id='q4_5'>
+					<label for="q4_5">
+					Someone just like me!
+					</label>			
+			</td>
+		</tr>
+	</table>
+	</br>
+Q5. Which gemstone do you like?
+	<table>
+		<tr>
+			<td>
+				<input type="radio" name="five" value="Ruby" id='q5_1'/>					
+					<label for="q5_1">
+						<img src = "Ruby.png" height="300" width="300"/>
+						</br>Ruby
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="five" value="Topaz" id='q5_2'/>					
+					<label for="q5_2">
+						<img src = "Topaz.png" height="300" width="300"/>
+						</br>Topaz
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="five" value="Sapphire" id='q5_3'/>					
+					<label for="q5_3">
+						<img src = "Sapphire.png" height="300" width="300"/>
+						</br>Sapphire
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="five" value="Emerald" id='q5_4'/>					
+					<label for="q5_4">
+						<img src = "Emerald.png" height="300" width="300"/>
+						</br>Emerald
+					</label>
+			</td>
+			<td>
+				<input type="radio" name="five" value="Diamond" id='q5_5'/>
+					<label for="q5_5">
+							<img src = "Diamond.png" height="300" width="300"/>
+							</br>Diamond
+					</label>
+			</td>
+		</tr>
+	</table>
+	</br>
+</br>
+</form>
+<input type="button" value="Submit" onclick="sortingCeremony();" style="padding:16px 32px; font-size:32px; cursor:pointer; background-color: cyan "/>
+</font>
+</body>
+</html>
